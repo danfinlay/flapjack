@@ -32,7 +32,11 @@ MainView.prototype.render = function () {
       },
     }, [
 
-      h('p', `You are flipping a ${props.coinCount} sided die.`),
+      h('p', [
+        `You are flipping a ${props.coinCount} sided die.`,
+        h('button', { onClick: () => this.props.dispatch({ type: 'ADD' }) }, 'Add Side'),
+        h('button', { onClick: () => this.props.dispatch({ type: 'SUB' }) }, 'Remove Side'),
+      ]),
 
       props.loadingBlock ?
         h(LoadingBlock) : h(BlockDetails)

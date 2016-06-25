@@ -16,20 +16,23 @@ const store = configureStore({
   targetBlockNumber: undefined,
 })
 
+let blockChecker
 if (typeof web3 !== 'undefined') {
-  web3.eth.getBlock('latest', function(err, block) {
-    if (err) {
-      return store.dispatch({
-        type: 'ERROR',
-        value: err,
-      })
-    }
+  blockChecker = setInterval(function() {
+    web3.eth.getBlock('latest', function(err, block) {
+      if (err) {
+        return store.dispatch({
+          type: 'ERROR',
+          value: err,
+        })
+      }
 
-    store.dispatch({
-      type: 'LATEST_BLOCK',
-      value: block,
+      store.dispatch({
+        type: 'LATEST_BLOCK',
+        value: block,
+      })
     })
-  })
+  }, 1000)
 }
 
 render(
