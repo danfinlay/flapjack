@@ -1,4 +1,4 @@
-# React Hyperscript Beefy ES6 Boilerplate
+# Flapjack
 
 Because what good is a boilerplate when it isn't the stack that I'm kinda into at the moment?
 
