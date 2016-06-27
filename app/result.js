@@ -6,36 +6,31 @@ const connect = require('react-redux').connect
 const ethUtil = require('ethereumjs-util')
 const BN = ethUtil.BN
 
-module.exports = connect(mapStateToProps)(BlockDetailView)
+module.exports = connect(mapStateToProps)(ResultView)
 
 function mapStateToProps (state) {
   return {
     block: state.latestBlock,
+    targetBlock: state.targetBlock,
     coinCount: state.coinCount,
+    resultBlock: state.resultBlock,
   }
 }
 
-inherits(BlockDetailView, Component)
-function BlockDetailView () {
+inherits(ResultView, Component)
+function ResultView () {
   Component.call(this)
 }
 
-BlockDetailView.prototype.render = function () {
+ResultView.prototype.render = function () {
   const props = this.props
-  const result = roll(props.block.hash, props.coinCount)
+  const { resultBlock, block, targetBlock, coinCount } = props
+  const result = roll(resultBlock.hash, coinCount)
 
   return (
-    h('div', {
-      style: {
-        background: '#CCDDEE',
-      },
-    }, [
-      h('p', [
-        `The current coin is number`,
-        h('span', { style: { fontWeight: 'bold' } }, ` ${props.block.number}`),
-      ]),
-
-      h('h2', `The Roll is ${result}`),
+    h('.jack-results', [
+      h('h2', `Hot jack, here it is!`),
+      h('h1.result', result),
     ])
   )
 }

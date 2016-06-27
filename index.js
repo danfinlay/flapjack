@@ -14,10 +14,11 @@ const store = configureStore({
   coinCount: 2,
   loadingBlock: true,
   latestBlock: undefined,
-  targetBlockNumber: undefined,
+  targetBlock: undefined,
 })
 
 let blockChecker
+let targetLoaded = false
 if (typeof web3 !== 'undefined') {
   blockChecker = setInterval(function() {
     web3.eth.getBlock('latest', function(err, block) {
@@ -25,6 +26,14 @@ if (typeof web3 !== 'undefined') {
         return store.dispatch({
           type: 'ERROR',
           value: err,
+        })
+      }
+
+      if (!targetLoaded) {
+        targetLoaded = true
+        store.dispatch({
+          type: 'TARGET_BLOCK',
+          value: parseInt(block.number) + 20,
         })
       }
 

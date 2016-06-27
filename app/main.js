@@ -3,6 +3,10 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const connect = require('react-redux').connect
 
+const LabeledInput = require('./components/labeled-input')
+const Cooking = require('./cooking')
+const Result = require('./result')
+
 module.exports = connect(mapStateToProps)(MainView)
 
 function mapStateToProps (state) {
@@ -10,7 +14,8 @@ function mapStateToProps (state) {
     coinCount: state.coinCount,
     loadingBlock: state.loadingBlock,
     latestBlock: state.latestBlock,
-    targetBlockNumber: state.targetBlockNumber,
+    targetBlock: state.targetBlock,
+    resultBlock: state.resultBlock,
   }
 }
 
@@ -37,11 +42,41 @@ MainView.prototype.render = function () {
 
       h('p', 'New jacks ready approx. every 14 seconds.'),
 
-      h('p', [
-        `You are flipping a ${props.coinCount} sided die.`,
-        h('button', { onClick: () => this.props.dispatch({ type: 'ADD' }) }, 'Add Side'),
-        h('button', { onClick: () => this.props.dispatch({ type: 'SUB' }) }, 'Remove Side'),
-      ]),
+      h(LabeledInput, {
+        label: 'Flip a number between 1 and...',
+        default: props.coinCount,
+        onChange: (value) => {
+          this.props.dispatch({
+            type: 'NEW_RANGE',
+            value,
+          })
+        },
+      }),
+      h(LabeledInput, {
+        label: 'Have it ready on order number...',
+        default: props.targetBlock,
+        onChange: (value) => {
+          this.props.dispatch({
+            type: 'TARGET_BLOCK',
+            value,
+          })
+        },
+      }),
+
+      this.renderResults(),
     ])
   )
+}
+
+MainView.prototype.renderResults = function() {
+  const props = this.props
+  const current = props.latestBlock.number
+  const target  = props.targetBlock
+  const result = props.resultBlock
+
+  if (target > current || !result) {
+    return h(Cooking)
+  } else {
+    return h(Result)
+  }
 }
