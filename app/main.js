@@ -3,9 +3,6 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const connect = require('react-redux').connect
 
-const LoadingBlock = require('./loading-block')
-const BlockDetails = require('./block-details')
-
 module.exports = connect(mapStateToProps)(MainView)
 
 function mapStateToProps (state) {
@@ -28,18 +25,23 @@ MainView.prototype.render = function () {
   return (
     h('div', {
       style: {
-        background: '#CECECE',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '26px',
       },
     }, [
+
+      h('h3', 'Now serving order #'),
+      h('h3', props.latestBlock.number),
+
+      h('p', 'New jacks ready approx. every 14 seconds.'),
 
       h('p', [
         `You are flipping a ${props.coinCount} sided die.`,
         h('button', { onClick: () => this.props.dispatch({ type: 'ADD' }) }, 'Add Side'),
         h('button', { onClick: () => this.props.dispatch({ type: 'SUB' }) }, 'Remove Side'),
       ]),
-
-      props.loadingBlock ?
-        h(LoadingBlock) : h(BlockDetails)
     ])
   )
 }

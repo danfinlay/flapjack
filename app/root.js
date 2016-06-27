@@ -5,6 +5,7 @@ const connect = require('react-redux').connect
 
 const Main = require('./main')
 const Fail = require('./fail')
+const LoadingBlock = require('./loading-block')
 
 module.exports = connect(mapStateToProps)(AppRoot)
 
@@ -13,6 +14,7 @@ function mapStateToProps (state) {
     view: state.currentView,
     nonce: state.nonce,
     web3Found: state.web3Found,
+    loadingBlock: state.loadingBlock,
   }
 }
 
@@ -26,13 +28,20 @@ AppRoot.prototype.render = function () {
 
   return (
     h('.content', [
-      h('div', {
+
+      h('.header', {
         style: {
-          background: '#AAA',
-        },
+          display: 'flex',
+          justifyContent: 'center',
+        }
       }, [
-        h('h1', `Flapjack`),
-        h('h2', `The secure way to flip a coin with a friend online, for free.`),
+        h('img.logo', {
+          src: '/static/images/flapjack-logo.svg',
+          style: {
+            width: '90%',
+            maxWidth: '800px',
+          }
+        }),
       ]),
 
       this.renderMain(),
@@ -43,7 +52,13 @@ AppRoot.prototype.render = function () {
 
 AppRoot.prototype.renderMain = function() {
   if (this.props.web3Found) {
-    return h(Main, { store: this.props.store })
+
+    if (this.props.loadingBlock) {
+      return h(LoadingBlock)
+    } else {
+      return h(Main)
+    }
+
   } else {
     return h(Fail)
   }

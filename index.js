@@ -3,6 +3,7 @@ const h = require('react-hyperscript')
 const configureStore = require('./lib/store')
 const Provider = require('react-redux').Provider
 const Root = require('./app/root.js')
+const styles = require('./app/styles')
 
 var body = document.querySelector('body')
 const container = document.createElement('div')
@@ -35,9 +36,11 @@ if (typeof web3 !== 'undefined') {
   }, 1000)
 }
 
-render(
+render(h('.super', [
+  h('style', styles),
   h(Provider, { store }, [
     h(Root),
   ]),
+]),
 container)
 
