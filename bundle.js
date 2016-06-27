@@ -5623,11 +5623,7 @@ function LoadingBlockView() {
 LoadingBlockView.prototype.render = function () {
   var props = this.props;
 
-  return h('div', {
-    style: {
-      background: 'orange'
-    }
-  }, ['Loading the latest block...']);
+  return h('h1', {}, ['Cooking up those sweet \'jacks...']);
 };
 
 },{"react":271,"react-hyperscript":92,"react-redux":96,"util":28}],33:[function(require,module,exports){
@@ -5787,7 +5783,7 @@ AppRoot.prototype.render = function () {
       justifyContent: 'center'
     }
   }, [h('img.logo', {
-    src: '/static/images/flapjack-logo.svg',
+    src: './static/images/flapjack-logo.svg',
     style: {
       width: '90%',
       maxWidth: '800px'
