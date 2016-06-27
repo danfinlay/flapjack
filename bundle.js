@@ -5743,7 +5743,8 @@ ResultView.prototype.render = function () {
 function roll(hash, mod) {
   var bnHash = new BN(hash, 16);
   var bnMod = new BN(mod, 10);
-  return bnHash.mod(bnMod).toString(10);
+  var one = new BN(1, 10);
+  return bnHash.mod(bnMod).add(one).toString(10);
 }
 
 },{"ethereumjs-util":40,"react":271,"react-hyperscript":92,"react-redux":96,"util":28}],35:[function(require,module,exports){
