@@ -20,12 +20,9 @@ LoadingBlockView.prototype.render = function () {
   const props = this.props
 
   return (
-    h('div', {
-      style: {
-        background: 'orange',
-      },
+    h('h1', {
     }, [
-      'Loading the latest block...'
+      'Cooking up those sweet \'jacks...'
     ])
   )
 }
