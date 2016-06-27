@@ -36,7 +36,7 @@ AppRoot.prototype.render = function () {
         }
       }, [
         h('img.logo', {
-          src: '/static/images/flapjack-logo.svg',
+          src: './static/images/flapjack-logo.svg',
           style: {
             width: '90%',
             maxWidth: '800px',
