@@ -5919,6 +5919,8 @@ module.exports = function (state, action) {
           return extend(state, {
             proposedNetwork: action.value
           });
+        } else {
+          paramer.setParam('network', state.network);
         }
       }
   }
