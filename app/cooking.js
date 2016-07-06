@@ -2,6 +2,7 @@ const inherits = require('util').inherits
 const Component = require('react').Component
 const h = require('react-hyperscript')
 const connect = require('react-redux').connect
+const copyToClipboard = require('copy-to-clipboard')
 
 module.exports = connect(mapStateToProps)(CookingView)
 
@@ -33,7 +34,32 @@ CookingView.prototype.render = function () {
         h('h3', `Should be ready ${timeRemaining}`),
       ]),
 
-
+      h('.button', {
+        onClick:(event) => {
+          copyToClipboard(window.location.href)
+        },
+        style: {
+          border: '1px solid grey',
+          transform: 'rotate(-2deg)',
+          padding: '7px',
+          fontFamily: 'sans-serif',
+          borderRadius: '10px',
+          display: 'flex',
+          height: '40px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+        }
+      }, [
+        h('img', {
+          style: {
+            height: '80%'
+          },
+          src: './static/images/link.png'
+        }),
+        h('span', {
+       }, 'Click to copy a link to your jack!')
+      ]),
     ])
   )
 }

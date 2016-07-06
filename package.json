@@ -24,7 +24,9 @@
   "author": "Dan Finlay",
   "license": "ISC",
   "dependencies": {
+    "copy-to-clipboard": "^3.0.3",
     "ethereumjs-util": "^4.4.1",
+    "qs": "^6.2.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-hyperscript": "^2.4.0",

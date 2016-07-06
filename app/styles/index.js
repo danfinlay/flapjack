@@ -34,4 +34,13 @@ h3 {
   align-items: center;
   padding: 20px;
 }
+
+.button:hover {
+  background: #AAA;
+}
+.button:active{
+  background: white;
+}
+
 `
+

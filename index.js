@@ -5,21 +5,33 @@ const Provider = require('react-redux').Provider
 const Root = require('./app/root.js')
 const styles = require('./app/styles')
 
+const paramer = require('./paramer')
+
 var body = document.querySelector('body')
 const container = document.createElement('div')
 body.appendChild(container)
 
 const store = configureStore({
   web3Found: typeof window.web3 !== 'undefined',
-  coinCount: 2,
+  coinCount: paramer.getParam('coinCount') || 2,
   loadingBlock: true,
   latestBlock: undefined,
-  targetBlock: undefined,
+  targetBlock: paramer.getParam('target'),
+  network: paramer.getParam('network') || null,
 })
+
 
 let blockChecker
 let targetLoaded = false
 if (typeof web3 !== 'undefined') {
+
+  web3.version.getNetwork(function(err, network) {
+    if (err) {
+      console.error('Problem accessing network.', err)
+    }
+    store.dispatch({ type: 'NETWORK', value: network })
+  })
+
   blockChecker = setInterval(function() {
     web3.eth.getBlock('latest', function(err, block) {
       if (err) {
