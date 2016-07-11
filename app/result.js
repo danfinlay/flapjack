@@ -38,5 +38,6 @@ ResultView.prototype.render = function () {
 function roll(hash, mod) {
   const bnHash = new BN(hash, 16)
   const bnMod = new BN(mod, 10)
-  return bnHash.mod(bnMod).toString(10)
+  const one = new BN(1, 10)
+  return bnHash.mod(bnMod).add(one).toString(10)
 }
