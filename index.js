@@ -25,6 +25,25 @@ let blockChecker
 let targetLoaded = false
 if (typeof web3 !== 'undefined') {
 
+  if (paramer.getParam('target')) {
+    targetLoaded = true
+    store.dispatch({
+      type: 'TARGET_BLOCK',
+      value: parseInt(paramer.getParam('target')),
+    })
+
+    web3.eth.getBlock(paramer.getParam('target'), function(err, block) {
+      if (err) {
+        console.error('Problem loading old block.', err)
+      } else {
+        store.dispatch({
+          type: 'LATEST_BLOCK',
+          value: block,
+        })
+      }
+    })
+  }
+
   web3.version.getNetwork(function(err, network) {
     if (err) {
       console.error('Problem accessing network.', err)
