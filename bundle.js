@@ -840,7 +840,9 @@ function fromArrayBuffer (that, array, byteOffset, length) {
     throw new RangeError('\'length\' is out of bounds')
   }
 
-  if (length === undefined) {
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
     array = new Uint8Array(array, byteOffset)
   } else {
     array = new Uint8Array(array, byteOffset, length)
@@ -2951,7 +2953,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = cachedSetTimeout(cleanUpNextTick);
+    var timeout = cachedSetTimeout.call(null, cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -2968,7 +2970,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    cachedClearTimeout(timeout);
+    cachedClearTimeout.call(null, timeout);
 }
 
 process.nextTick = function (fun) {
@@ -2980,7 +2982,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        cachedSetTimeout(drainQueue, 0);
+        cachedSetTimeout.call(null, drainQueue, 0);
     }
 };
 
@@ -6246,6 +6248,8 @@ module.exports = function (state, action) {
   }
 
   if (action.type === 'LATEST_BLOCK') {
+
+    if (!action.value) return state;
 
     if (parseInt(action.value.number) === parseInt(state.targetBlock)) {
       var result = extend(state, {
@@ -12640,8 +12644,8 @@ exports.isNumberInInterval = function (number, x, y, message) {
   if (number <= x || number >= y) throw RangeError(message)
 }
 
-}).call(this,{"isBuffer":require("../../../../../../../../.nvm/versions/node/v6.0.0/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../.nvm/versions/node/v6.0.0/lib/node_modules/browserify/node_modules/is-buffer/index.js":10}],64:[function(require,module,exports){
+}).call(this,{"isBuffer":require("../../../../../../../../../.nvm/versions/node/v6.3.1/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../../../../.nvm/versions/node/v6.3.1/lib/node_modules/browserify/node_modules/is-buffer/index.js":10}],64:[function(require,module,exports){
 (function (Buffer){
 'use strict'
 var createHash = require('create-hash')
