@@ -1,6 +1,6 @@
 # Flapjack
 
-[Live example](https://flyswatter.github.io/flapjack/)
+[Live example](https://danfinlay.github.io/flapjack/)
 
 To run:
 
