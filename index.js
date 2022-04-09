@@ -10,7 +10,7 @@ const container = document.createElement('div')
 body.appendChild(container)
 
 const store = configureStore({
-  web3Found: typeof window.web3 !== 'undefined',
+  web3Found: typeof window.ethereum !== 'undefined',
   coinCount: 2,
   loadingBlock: true,
   latestBlock: undefined,
@@ -19,16 +19,13 @@ const store = configureStore({
 
 let blockChecker
 let targetLoaded = false
-if (typeof web3 !== 'undefined') {
+if (typeof ethereum !== 'undefined') {
   blockChecker = setInterval(function() {
-    web3.eth.getBlock('latest', function(err, block) {
-      if (err) {
-        return store.dispatch({
-          type: 'ERROR',
-          value: err,
-        })
-      }
-
+    ethereum.request({
+      method: 'eth_getBlockByNumber',
+      params:[ 'latest', true ],
+    })
+    .then((block) => {
       if (!targetLoaded) {
         targetLoaded = true
         store.dispatch({
@@ -42,7 +39,13 @@ if (typeof web3 !== 'undefined') {
         value: block,
       })
     })
-  }, 1000)
+    .catch((err) => {
+      store.dispatch({
+        type: 'ERROR',
+        value: err,
+      })
+    });
+  }, 1000);
 }
 
 render(h('.super', [
